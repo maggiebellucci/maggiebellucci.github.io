@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabajos - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Trabajos - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/work.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <style>
+    /* Solo los 4 colores de la paleta. Fondo: degradé oliva → rosa + grilla de puntitos muy sutil */
+    .orbit { position: relative; height: 420vh; }
+    .orbit__sticky {
+      position: sticky; top: 0; height: 100svh; overflow: hidden;
+    }
+    .orbit__sticky::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image: radial-gradient(circle, rgba(34, 30, 62, .22) .9px, transparent 1.3px);
+      background-size: 13px 13px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 40%, rgba(0, 0, 0, .35));
+              mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, #000 40%, rgba(0, 0, 0, .35));
+    }
+    .scene { position: absolute; inset: var(--header) 0 0 0; perspective: 1500px; perspective-origin: 50% 42%; cursor: grab; touch-action: pan-y; user-select: none; }
+    .scene.is-drag { cursor: grabbing; }
+    .world { position: absolute; left: 50%; top: 47%; transform-style: preserve-3d; }
+    .ask { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); white-space: nowrap; font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5vw, 84px); line-height: 1; color: var(--navy); pointer-events: none; }
+    .ring { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+
+    /* Tarjeta curva: franjas sobre un cilindro; las de atrás muestran la imagen oscurecida */
+    .oc { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
+    .oc i { position: absolute; left: 0; top: 0; display: block; backface-visibility: hidden; background-repeat: no-repeat; background-color: var(--navy); }
+    .oc i.back { filter: brightness(.7); }
+    .oc__tag { position: absolute; left: 0; top: 0; display: flex; gap: 10px; align-items: baseline; white-space: nowrap; backface-visibility: hidden;
+      font-family: var(--serif); font-weight: 500; font-size: clamp(18px, 1.9vw, 30px); color: var(--navy); }
+    .oc__tag small { font-family: var(--sans); font-weight: 400; font-size: clamp(10px, .8vw, 12px); letter-spacing: .14em; text-transform: uppercase; color: var(--pink); background: var(--navy); padding: 4px 8px; }
+    .oc__tag small.soon { background: var(--wine); color: var(--pink); }
+    .oc.is-hover i:not(.back) { filter: brightness(1.1); }
+    .oc__tag small { transition: background .3s, color .3s; }
+    .oc.is-link.is-hover .oc__tag small { background: var(--wine); color: var(--cream); }
+    .oc.is-link.is-hover .oc__tag { color: var(--wine); }
+
+    .hint { position: absolute; left: 50%; bottom: 34px; transform: translateX(-50%); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy); opacity: .8; white-space: nowrap; }
+    /* Celular: la pregunta va arriba de las tarjetas para que no quede tapada */
+    @media (max-width: 700px) { .ask { font-size: 9vw; transform: translate(-50%, calc(-50% - 28svh)); } }
+  </style>
+</head>
+<body>
+  <header class="hd" data-label="Trabajos" data-nav="about"></header>
+  <section class="orbit" id="orbit">
+    <div class="orbit__sticky">
+      <div class="scene" id="scene">
+        <div class="world">
+          <h1 class="ask">¿Qué querés ver?</h1>
+          <div class="ring" id="ring"></div>
+        </div>
+      </div>
+      <p class="hint">Scrolleá o arrastrá · click para entrar</p>
+    </div>
+  </section>
+  <footer class="ft"></footer>
+  <script src="js/site.js?v=25"></script>
+  <script>
+    const CARDS = [
+      { title: 'IA', img: 'assets/img/cover-ia.jpg', href: 'ia.html', tag: 'Videos' },
+      { title: 'Animación', img: 'assets/posters/shazam.jpg', href: 'motion.html', tag: 'Videos' },
+      { title: 'Sistema', img: 'assets/img/tesis-lamina.png', top: true, href: 'tesis.html', tag: 'Tesis' },
+      { title: 'Labs', img: 'assets/img/cover-labs.jpg', href: null, tag: 'Próximamente' },
+    ];
+    const SLICES = 16;
+    const orbit = document.getElementById('orbit');
+    const scene = document.getElementById('scene');
+    const ring = document.getElementById('ring');
+    let R, W, H;
+
+    const cards = CARDS.map((c, i) => {
+      const el = document.createElement('div');
+      el.className = 'oc' + (c.href ? ' is-link' : '');
+      el.dataset.i = i;
+      for (let s = 0; s < SLICES; s++) {
+        const front = document.createElement('i');
+        const back = document.createElement('i');
+        back.className = 'back';
+        front.style.backgroundImage = back.style.backgroundImage = `url("${c.img}")`;
+        el.append(front, back);
+      }
+      const tag = document.createElement('p');
+      tag.className = 'oc__tag';
+      tag.innerHTML = `${c.title} <small class="${c.href ? '' : 'soon'}">${c.tag}</small>`;
+      el.append(tag);
+      ring.append(el);
+      return el;
+    });
+
+    // Cada tarjeta es un arco del cilindro: franjas giradas alrededor del centro
+    function layout() {
+      const vw = innerWidth, mobile = vw < 700;
+      R = mobile ? vw * 0.5 : Math.min(vw * 0.34, 560);
+      // La tarjeta de adelante se agranda por la perspectiva (1500px): se limita por el alto disponible
+      const zoom = 1500 / (1500 - R);
+      const availH = innerHeight - document.querySelector('.hd').offsetHeight;
+      W = Math.min(mobile ? vw * 0.6 : Math.min(vw * 0.22, 400), (availH * 0.5 / zoom) / 0.62);
+      H = W * 0.62;
+      const arc = W / R, sa = arc / SLICES;
+      const sw = 2 * R * Math.tan(sa / 2) + 1;
+      cards.forEach((el, i) => {
+        const slices = el.querySelectorAll('i');
+        for (let s = 0; s < SLICES; s++) {
+          const ang = (-arc / 2 + sa * (s + 0.5)) * 180 / Math.PI;
+          const f = slices[s * 2], b = slices[s * 2 + 1];
+          for (const n of [f, b]) {
+            n.style.width = `${sw}px`;
+            n.style.height = `${H}px`;
+            n.style.marginLeft = `${-sw / 2}px`;
+            n.style.marginTop = `${-H / 2}px`;
+          }
+          f.style.transform = `rotateY(${ang}deg) translateZ(${R}px)`;
+          b.style.transform = `rotateY(${ang}deg) translateZ(${R - 1}px) rotateY(180deg)`;
+        }
+        el.querySelector('.oc__tag').style.transform = `translate(${-W / 2}px, ${H / 2 + 14}px) translateZ(${R + 2}px)`;
+        cover(el, CARDS[i]);
+      });
+    }
+
+    // Recorta la imagen en "cover" y reparte un pedazo a cada franja.
+    // Visto de atrás el orden de las franjas se invierte, así que la cara trasera usa el pedazo espejado.
+    function cover(el, c) {
+      const img = new Image();
+      img.onload = () => {
+        const k = Math.max(W / img.width, H / img.height);
+        const iw = img.width * k, ih = img.height * k;
+        const ox = (iw - W) / 2, oy = c.top ? 0 : (ih - H) / 2;
+        const strip = W / SLICES;
+        const slices = el.querySelectorAll('i');
+        for (let s = 0; s < SLICES; s++) {
+          const f = slices[s * 2], b = slices[s * 2 + 1];
+          for (const n of [f, b]) n.style.backgroundSize = `${iw}px ${ih}px`;
+          f.style.backgroundPosition = `${-ox - s * strip}px ${-oy}px`;
+          b.style.backgroundPosition = `${-ox - (SLICES - 1 - s) * strip}px ${-oy}px`;
+        }
+      };
+      img.src = c.img;
+    }
+
+    // Rotación: scroll + arrastre + un giro lento en reposo
+    let target = 0, current = 0, drag = 0, idle = 0, last = performance.now(), down = null;
+    const range = () => orbit.offsetHeight - innerHeight;
+    function readScroll() {
+      const p = Math.min(1, Math.max(0, -orbit.getBoundingClientRect().top / range()));
+      target = -p * 360;
+    }
+    addEventListener('scroll', readScroll, { passive: true });
+    addEventListener('resize', () => { layout(); readScroll(); });
+
+    function frame(now) {
+      const dt = Math.min(64, now - last); last = now;
+      if (!down) idle -= dt * 0.004;
+      current += (target + drag + idle - current) * 0.08;
+      ring.style.transform = `rotateY(${current}deg)`;
+      cards.forEach((el, i) => {
+        const y = [-0.75, 0, 0.3, -0.75][i] * (innerWidth < 700 ? 60 : H * 0.35);
+        el.style.transform = `rotateY(${i * 90}deg) translateY(${y}px)`;
+      });
+      requestAnimationFrame(frame);
+    }
+
+    // Arrastrar gira el anillo; un click sin arrastre entra a la sección
+    const cardAt = (x, y) => {
+      const hit = document.elementsFromPoint(x, y).find(n => n.tagName === 'I' && !n.classList.contains('back') && n.closest('.oc'));
+      return hit ? hit.closest('.oc') : null;
+    };
+    scene.addEventListener('pointerdown', e => { down = { x: e.clientX, d: drag, moved: 0 }; scene.classList.add('is-drag'); scene.setPointerCapture(e.pointerId); });
+    scene.addEventListener('pointermove', e => {
+      const over = cardAt(e.clientX, e.clientY);
+      cards.forEach(c => c.classList.toggle('is-hover', c === over));
+      scene.style.cursor = over && over.classList.contains('is-link') && !down ? 'pointer' : '';
+      if (!down) return;
+      const dx = e.clientX - down.x;
+      down.moved = Math.max(down.moved, Math.abs(dx));
+      drag = down.d + dx * 0.25;
+    });
+    scene.addEventListener('pointerup', e => {
+      scene.classList.remove('is-drag');
+      if (down && down.moved < 6) {
+        const el = cardAt(e.clientX, e.clientY);
+        const c = el && CARDS[el.dataset.i];
+        if (c && c.href) location.href = c.href;
+      }
+      down = null;
+    });
+
+    layout();
+    readScroll();
+    current = target;
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>

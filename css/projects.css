@@ -1,0 +1,82 @@
+/* Páginas de proyectos: encabezado (título + intro + controles), lista de piezas y reproductor con ficha.
+   Mismo formato que la página de IA; IA suma además el showcase 3D. */
+/* Sistema de espacios: un solo margen lateral y tres medidas verticales, iguales en todas las páginas */
+:root { --gutter: calc(51 * var(--u)); --sp-s: max(12px, calc(16 * var(--u))); --sp-m: max(24px, calc(32 * var(--u))); --sp-l: max(40px, calc(56 * var(--u))); }
+@media (max-width: 700px) { :root { --gutter: 16px; } }
+
+.films__head { padding: calc(var(--header) + var(--sp-m)) var(--gutter) 0; display: grid; gap: var(--sp-s); }
+.films__head h1 { font-family: var(--serif); font-weight: 500; font-size: max(20px, calc(24 * var(--u))); }
+.films__head p { font-weight: 400; font-size: max(11px, calc(13 * var(--u))); line-height: 1.45; max-width: calc(700 * var(--u)); min-width: min(100%, 420px); }
+.films__head p strong { font-weight: 500; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; align-items: center; border-top: 1px solid rgba(34, 30, 62, .18); padding-top: var(--sp-s); margin-top: calc(var(--sp-s) / 2); }
+.seg { display: flex; gap: calc(28 * var(--u)); font-size: max(12px, calc(15 * var(--u))); font-weight: 300; }
+.seg button { opacity: .4; transition: opacity .3s; }
+.seg button.is-on, .seg button:hover { opacity: 1; }
+.chips { display: flex; gap: 8px; }
+.chips button { font-size: max(11px, calc(14 * var(--u))); font-weight: 300; padding: calc(8 * var(--u)) calc(18 * var(--u)); border: 1px solid rgba(34, 30, 62, .3); transition: background .3s, color .3s, border-color .3s; }
+.chips button:hover { border-color: var(--wine); color: var(--wine); }
+.chips button.is-on { background: var(--olive); border-color: var(--olive); color: var(--cream); }
+
+.list { padding: var(--sp-l) var(--gutter) calc(var(--sp-l) * 1.5); display: grid; gap: var(--sp-l); }
+.list[hidden], .list__group[hidden] { display: none; }
+.list__label { font-family: var(--serif); font-weight: 500; font-size: max(18px, calc(20 * var(--u))); color: var(--pink); margin-bottom: var(--sp-s); }
+.list__grid { display: grid; gap: var(--sp-s); grid-template-columns: repeat(auto-fill, minmax(min(100%, calc(260 * var(--u) + 60px)), 1fr)); align-items: start; }
+.tile { position: relative; overflow: hidden; background: var(--navy); text-align: left; }
+.tile video { width: 100%; aspect-ratio: var(--ar); object-fit: cover; transition: transform .8s cubic-bezier(.2,.7,.1,1); }
+.tile:hover video { transform: scale(1.03); }
+.tile__cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 70px 12px 10px; background: linear-gradient(to top, rgba(34, 30, 62, .72) 0%, rgba(34, 30, 62, .45) 30%, rgba(34, 30, 62, .18) 65%, rgba(34, 30, 62, 0) 100%); }
+/* Letras "huecas": dejan ver el fondo del sitio (la foto lavada) a través */
+.tile__cap b { font-family: var(--serif); font-weight: 500; font-size: 17px; color: transparent; background: var(--photo); background-attachment: fixed; -webkit-background-clip: text; background-clip: text; }
+
+.player { position: fixed; inset: 0; z-index: 100; background: rgba(34, 30, 62, .97); display: grid; place-items: center; padding: 64px calc(51 * var(--u)); }
+.player[hidden] { display: none; }
+.player__inner { display: grid; grid-template-columns: auto minmax(240px, 360px); gap: 40px; align-items: center; max-height: 100%; }
+.player video { max-height: calc(100svh - 128px); max-width: min(62vw, 1100px); background: #000; }
+.player__info { color: var(--cream); display: grid; gap: 14px; max-height: calc(100svh - 128px); overflow-y: auto; font-size: 12px; line-height: 1.45; }
+.player__info .cat { font-size: 11px; text-transform: uppercase; color: var(--pink); opacity: .8; }
+.player__info h3 { font-family: var(--serif); font-weight: 500; font-size: 26px; color: var(--pink); line-height: 1.1; }
+.player__info .desc p + p { margin-top: .8em; }
+.player__info .meta { display: grid; gap: 10px; }
+.player__info .label { opacity: .6; }
+.player__info .todo { opacity: .45; }
+.player button { position: absolute; color: var(--pink); font-size: 24px; padding: 12px; transition: color .3s; }
+.player button:hover { color: var(--cream); }
+.player__close { top: 12px; right: 18px; }
+.player__nav--prev { left: 8px; top: 50%; }
+.player__nav--next { right: 8px; top: 50%; }
+@media (max-width: 900px) {
+  .player { place-items: start center; overflow-y: auto; }
+  .player__inner { grid-template-columns: 1fr; gap: 20px; }
+  .player video { max-width: 100%; max-height: 60svh; margin: 0 auto; }
+}
+@media (max-width: 700px) {
+}
+
+/* Variante en columna: piezas grandes, una debajo de la otra */
+/* Los videos ocupan todo el ancho: mismo margen a los dos lados, alineados con el texto de arriba */
+.list--stack .list__grid { grid-template-columns: 1fr; gap: var(--sp-l); }
+.list--stack .tile { width: 100%; }
+/* Franja apaisada (3:1): muestra solo una parte del video, para dar intriga y que hagan click */
+.list--stack .tile { --ar: 3 / 1 !important; }
+@media (max-width: 700px) { .list--stack .tile { --ar: 16 / 9 !important; } }
+.list--stack .tile__cap { padding: 10% 20px 16px; }
+.list--stack .tile__cap b { font-size: max(18px, calc(24 * var(--u))); }
+
+/* Hover de las piezas: el video se ilumina, el título sube un poco y aparece "Ver" */
+.tile video { transition: transform .8s cubic-bezier(.2,.7,.1,1), filter .4s; }
+.tile:hover video { filter: brightness(1.1) saturate(1.05); }
+.tile__cap b { display: inline-block; transition: transform .4s cubic-bezier(.2,.7,.1,1); }
+.tile:hover .tile__cap b { transform: translateY(-4px); }
+.tile::after {
+  content: "Ver ↗"; position: absolute; top: 12px; right: 12px; z-index: 3; pointer-events: none;
+  padding: 6px 10px; background: var(--pink); color: var(--navy);
+  font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  opacity: 0; transform: translateY(-4px); transition: opacity .3s, transform .3s;
+}
+.tile:hover::after { opacity: 1; transform: none; }
+@media (hover: none) { .tile::after { display: none; } }
+.chips button { transition: background .3s, color .3s, border-color .3s; }
+
+/* Link externo dentro de la ficha (por ejemplo, la nota de Infobae) */
+.plink { display: inline-block; padding: 8px 14px; border: 1px solid var(--pink); color: var(--pink); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s; }
+.plink:hover { background: var(--pink); color: var(--navy); }

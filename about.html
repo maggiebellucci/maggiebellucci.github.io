@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobre mí - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sobre mí - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/about.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <style>
+    /* Tarjeta personal en 3D: papel rosa con textura de letterpress, tinta violeta (el oliva no se leía sobre el rosa) */
+    .about { position: relative; min-height: calc(100svh - var(--header)); margin-top: var(--header); display: grid; place-items: center; padding: 40px 16px 72px; }
+    .stage3d { perspective: 1800px; width: min(78vw, 820px, (100svh - var(--header) - 150px) * 1.68); cursor: grab; touch-action: none; user-select: none; }
+    .stage3d.is-drag { cursor: grabbing; }
+    .bcard { --ink: var(--navy); position: relative; width: 100%; aspect-ratio: 1.68; transform-style: preserve-3d; will-change: transform; }
+    .bcard__face {
+      position: absolute; inset: 0; backface-visibility: hidden; overflow: hidden; container-type: inline-size;
+      background-color: var(--pink); color: var(--ink);
+      box-shadow: 0 30px 60px -30px rgba(34, 30, 62, .55), 0 10px 20px -12px rgba(34, 30, 62, .35);
+    }
+    .bcard__face.reverse { transform: rotateY(180deg); }
+    /* Textura de papel algodón: relieve iluminado (como papel de alto gramaje), grano fino y motas de fibra */
+    .bcard__face::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='5' seed='7'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='.9' diffuseConstant='1.15'%3E%3CfeDistantLight azimuth='225' elevation='52'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.035' numOctaves='3' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .25  0 0 0 0 .35  0 0 0 1 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='1' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .12  0 0 0 0 .22  0 0 0 9 -8.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)'/%3E%3C/svg%3E");
+      background-blend-mode: normal;
+      mix-blend-mode: multiply; opacity: .32;
+    }
+    /* Viñeta suave en los bordes, como un papel real fotografiado */
+    .bcard__face > .vig { position: absolute; inset: 0; pointer-events: none; z-index: 2;
+      background: radial-gradient(ellipse 120% 110% at 50% 45%, transparent 60%, rgba(115, 48, 76, .18)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); }
+    /* Luz que se mueve al girar la tarjeta */
+    .bcard__face::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 90% at var(--lx, 30%) var(--ly, 20%), rgba(255, 255, 255, .28), transparent 60%),
+                  linear-gradient(160deg, rgba(255, 255, 255, .08), rgba(115, 48, 76, .12));
+    }
+    .bcard__inner { position: relative; z-index: 1; height: 100%; padding: 6cqw 6.5cqw 5.5cqw; display: grid; }
+
+    /* Tinta hundida (letterpress) */
+    .press { color: var(--ink); text-shadow: 0 .06em 0 rgba(255, 255, 255, .32), 0 -.03em 0 rgba(34, 30, 62, .18); }
+    /* Relieve en seco, del mismo color del papel (como el COURE de la inspo) */
+    .emboss { position: absolute; left: 50%; top: 57%; transform: translate(-50%, -50%); z-index: 0; font-family: var(--serif); font-weight: 400; font-size: 17cqw; line-height: 1; letter-spacing: -.01em; white-space: nowrap; color: var(--pink);
+      text-shadow: -.006em -.008em .005em rgba(255, 255, 255, .22), .008em .01em .012em rgba(115, 48, 76, .3); opacity: .85; pointer-events: none; }
+
+    .front .bcard__inner { grid-template-rows: auto 1fr auto; text-align: center; }
+    .bc-name { font-family: var(--serif); font-weight: 400; font-size: 5.6cqw; line-height: 1; }
+    .bc-sub { margin-top: 1.4cqw; font-size: 1.75cqw; text-transform: uppercase; letter-spacing: .02em; }
+    .bc-cols { display: grid; grid-template-columns: 1.25fr 1fr; gap: 5cqw; align-self: center; text-align: left; font-size: 1.75cqw; line-height: 1.38; }
+    .bc-cols h3 { font-family: var(--serif); font-weight: 500; font-size: 2.3cqw; margin-bottom: 1cqw; }
+    .bc-cols dt { font-weight: 500; margin-top: .9cqw; }
+    .bc-cols dt:first-child { margin-top: 0; }
+    .bc-job { font-size: 2.2cqw; font-family: var(--serif); }
+    .bc-cv { justify-self: center; display: inline-grid; place-items: center; padding: 1.3cqw 6cqw; font-size: 1.6cqw; text-transform: uppercase; letter-spacing: .08em;
+      color: var(--pink); background: var(--ink); box-shadow: inset 0 .25cqw .4cqw rgba(0, 0, 0, .25), 0 .1cqw 0 rgba(255, 255, 255, .35); transition: background .3s; }
+    .bc-cv:hover { background: var(--wine); }
+
+    .reverse .bcard__inner { align-content: center; gap: 1.6cqw; font-size: 1.85cqw; line-height: 1.5; }
+    .reverse h2 { font-family: var(--serif); font-weight: 500; font-size: 3cqw; margin-bottom: .6cqw; }
+    .reverse .bc-corner { position: absolute; right: 6.5cqw; bottom: 5cqw; font-size: 1.4cqw; text-transform: uppercase; }
+
+    .shadow { position: absolute; left: 50%; bottom: 40px; width: min(60vw, 640px); height: 40px; transform: translateX(-50%); background: radial-gradient(ellipse at center, rgba(34, 30, 62, .28), transparent 70%); filter: blur(6px); pointer-events: none; }
+    .hint3d { position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy); opacity: .7; white-space: nowrap; }
+    /* Celular y tablet vertical: la tarjeta pasa a formato vertical con letra más grande */
+    @media (max-width: 760px) {
+      .about { padding: 24px 16px 80px; }
+      .stage3d { width: min(88vw, 440px); }
+      .bcard { aspect-ratio: .62; }
+      .bcard__inner { padding: 9cqw 8cqw 8cqw; }
+      .bc-name { font-size: 9.5cqw; }
+      .bc-sub { font-size: 3.2cqw; margin-top: 2.4cqw; }
+      .bc-cols { grid-template-columns: 1fr; gap: 6cqw; font-size: 3.5cqw; }
+      .bc-cols h3 { font-size: 5cqw; margin-bottom: 2cqw; }
+      .bc-cols dt { margin-top: 1.8cqw; }
+      .bc-job { font-size: 4.4cqw; }
+      .bc-cv { font-size: 3.3cqw; padding: 2.8cqw 12cqw; }
+      .emboss { font-size: 24cqw; top: 60%; }
+      .reverse .bcard__inner { gap: 3cqw; font-size: 3.55cqw; line-height: 1.45; }
+      .reverse h2 { font-size: 6cqw; }
+      .reverse .bc-corner { font-size: 2.8cqw; }
+      .shadow { width: 70vw; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hd" data-label="Sobre mí"></header>
+
+  <main class="about">
+    <div class="shadow" aria-hidden="true"></div>
+    <div class="stage3d" id="stage">
+      <div class="bcard" id="card">
+        <!-- Frente -->
+        <section class="bcard__face front">
+          <span class="emboss" aria-hidden="true">Designer</span><span class="vig"></span>
+          <div class="bcard__inner">
+            <header>
+              <p class="bc-name press">Magdalena Bellucci</p>
+              <p class="bc-sub press">Diseño integral y dirección IA</p>
+            </header>
+            <div class="bc-cols press">
+              <div>
+                <h3>Estudios</h3>
+                <dl>
+                  <dt>Universidad Torcuato Di Tella</dt><dd>Licenciatura en Diseño</dd><dd>Intercambio en Universidad Complutense de Madrid (2025)</dd>
+                  <dt>Brother Buenos Aires</dt><dd>IA &amp; Dirección de Arte</dd>
+                  <dt>Ten10 Design</dt><dd>Masterclass de Branding</dd>
+                  <dt>Colegio Santa Inés</dt><dd>Bachiller con orientación en Ciencias Sociales (2021)</dd>
+                </dl>
+              </div>
+              <div>
+                <h3>Trabajo actual</h3>
+                <p class="bc-job">Not Ordinary Agency</p>
+              </div>
+            </div>
+            <a class="bc-cv" data-cv>Ver CV</a>
+          </div>
+        </section>
+        <!-- Dorso -->
+        <section class="bcard__face reverse">
+          <div class="bcard__inner press">
+            <h2>Sobre mí</h2>
+            <p>El diseño es el eje desde el cual pienso, observo y me relaciono con el mundo. No lo entiendo solo como una disciplina estética, sino como una herramienta para comunicar, cuestionar, organizar ideas y generar sentido. Es parte de un todo más grande que construye quién soy y cómo trabajo.</p>
+            <p>Me considero una persona perseverante, ordenada, dedicada, proactiva y curiosa. Disfruto aprender, explorar nuevos contextos y enfrentar desafíos que me saquen de lo conocido. Creo en el trabajo constante, en la importancia del proceso y en el valor de trabajar en equipo para crecer tanto a nivel profesional como personal.</p>
+            <p>Crecí en una familia que moldeó profundamente mi carácter. Ese entorno me dio voz, convicción y una fuerte noción de defensa de mis ideas, justicia, sensibilidad y compromiso. Hoy esos valores atraviesan mi forma de pensar proyectos, de posicionarme y de comunicar.</p>
+          </div>
+          <p class="bc-corner press">Magdalena Bellucci</p><span class="vig"></span>
+        </section>
+      </div>
+    </div>
+    <p class="hint3d">Arrastrá para girar la tarjeta</p>
+  </main>
+
+  <footer class="ft"></footer>
+  <script src="js/site.js?v=25"></script>
+  <script>
+    // Giro libre arrastrando (360°), con inercia y un leve balanceo en reposo
+    const stage = document.getElementById('stage');
+    const card = document.getElementById('card');
+    const faces = card.querySelectorAll('.bcard__face');
+    let ry = -14, rx = 6, vy = 0, vx = 0, down = null, t0 = performance.now();
+
+    stage.addEventListener('pointerdown', e => {
+      down = { x: e.clientX, y: e.clientY, moved: 0 };
+      stage.classList.add('is-drag');
+      stage.setPointerCapture(e.pointerId);
+    });
+    stage.addEventListener('pointermove', e => {
+      if (!down) return;
+      const dx = e.clientX - down.x, dy = e.clientY - down.y;
+      down.moved += Math.abs(dx) + Math.abs(dy);
+      down.x = e.clientX; down.y = e.clientY;
+      vy = dx * 0.45; vx = -dy * 0.3;
+      ry += vy; rx = Math.max(-35, Math.min(35, rx + vx));
+    });
+    const up = e => {
+      if (!down) return;
+      stage.classList.remove('is-drag');
+      // Un toque sin arrastre sobre el botón abre el CV
+      if (down.moved < 6) {
+        const cv = document.elementsFromPoint(e.clientX, e.clientY).find(n => n.matches?.('.bc-cv'));
+        if (cv) window.open(cv.href, '_blank', 'noopener');
+      }
+      down = null;
+    };
+    stage.addEventListener('pointerup', up);
+    stage.addEventListener('pointercancel', up);
+    card.querySelector('.bc-cv').addEventListener('click', e => e.preventDefault());
+
+    (function loop(now) {
+      if (!down) {
+        ry += vy; rx += vx;
+        vy *= 0.94; vx *= 0.9;
+        rx += (6 - rx) * 0.02;                      // vuelve suave a una leve inclinación
+        if (Math.abs(vy) < 0.02) ry += Math.sin((now - t0) / 1400) * 0.05;  // balanceo en reposo
+      }
+      card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      // La luz se desplaza según el ángulo
+      const a = ((ry % 360) + 360) % 360;
+      const lx = 50 - Math.sin(a * Math.PI / 180) * 45;
+      faces.forEach(f => { f.style.setProperty('--lx', `${lx}%`); f.style.setProperty('--ly', `${30 - rx}%`); });
+      requestAnimationFrame(loop);
+    })(t0);
+  </script>
+</body>
+</html>

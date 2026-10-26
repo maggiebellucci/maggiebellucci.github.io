@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contacto - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contacto - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/contact.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <style>
+    .box { background: var(--cream); }
+    .ct { display: flex; align-items: center; gap: calc(14 * var(--u)); color: var(--navy); transition: color .3s; }
+    .ct svg { width: max(18px, calc(25 * var(--u))); height: max(18px, calc(25 * var(--u))); color: var(--olive); flex: none; transition: color .3s; }
+    .ct:hover, .ct:hover svg { color: var(--wine); }
+  </style>
+</head>
+<body>
+  <header class="hd" data-label="Contacto"></header>
+  <main class="cv" style="--h:900">
+    <img class="ghost" src="assets/img/hero.jpg" alt="" style="left:calc(-146 * var(--u));top:calc(-240 * var(--u));width:calc(1718 * var(--u));height:calc(1018 * var(--u))">
+    <div class="a box" style="--x:469;--y:152;--w:498;--hh:341"></div>
+    <div class="a fs" id="contacts" style="--x:585;--y:212;--w:360;--fs:16;display:grid;gap:calc(36 * var(--u))"></div>
+    <a class="a btn fs" data-cv style="--x:622;--y:518;--w:193;--hh:49;--fs:16">CV</a>
+  </main>
+  <script src="js/site.js?v=25"></script>
+  <script>
+    document.getElementById('contacts').innerHTML = ['mail', 'in', 'be', 'ig'].map(k => {
+      const [href, txt] = LINKS[k];
+      return `<a class="ct" href="${href}"${k === 'mail' ? '' : ' target="_blank" rel="noopener"'}>${ICONS[k]}<span>${txt}</span></a>`;
+    }).join('');
+  </script>
+</body>
+</html>

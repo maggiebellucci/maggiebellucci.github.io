@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pensamiento sistémico - Tesis - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pensamiento sistémico - Tesis - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/tesis.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <link rel="stylesheet" href="css/projects.css?v=25">
+  <style>
+    /* Apertura: video chico, pregunta centrada y la lámina */
+    .opening { display: grid; justify-items: center; gap: calc(28 * var(--u)); padding: calc(48 * var(--u)) calc(51 * var(--u)) 0; }
+    .opening video { width: max(240px, calc(360 * var(--u))); aspect-ratio: 3 / 2; object-fit: cover; display: block; }
+    .opening__q { max-width: 460px; text-align: center; font-size: max(13px, calc(15 * var(--u))); line-height: 1.45; }
+    .panel { position: relative; width: min(100%, calc(1225 * var(--u))); height: calc(523 * var(--u)); min-height: 280px; overflow-y: auto; overscroll-behavior: contain; cursor: zoom-in; }
+    .panel img { width: 100%; height: auto; display: block; transition: filter .4s; }
+    .panel:hover img { filter: brightness(1.05); }
+    .panel__btn { transition: background .3s, color .3s; }
+    .panel:hover .panel__btn { background: var(--wine); color: var(--cream); }
+    .panel__btn { position: sticky; left: 100%; bottom: 12px; float: right; margin: -40px 12px 0 0; padding: 8px 14px; background: var(--navy); color: var(--pink); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+
+    /* Vista completa de la lámina */
+    .viewer { position: fixed; inset: 0; z-index: 100; background: rgba(34, 30, 62, .96); overflow-y: auto; }
+    .viewer[hidden] { display: none; }
+    .viewer img { display: block; width: min(100%, 1500px); margin: 0 auto; }
+    .viewer__close { position: fixed; top: 16px; right: 20px; z-index: 2; width: 52px; height: 52px; display: grid; place-items: center; background: var(--pink); color: var(--navy); font-size: 28px; line-height: 1; }
+    .viewer__close:hover { background: var(--cream); }
+    .signs { position: absolute; }
+    .signs .crop { position: absolute; overflow: hidden; }
+    .signs .crop img, .signs .sign { position: absolute; max-width: none; }
+
+    .band { left: 0 !important; width: 100% !important; overflow: hidden; }
+    .band__track { display: flex; align-items: center; width: max-content; animation: band 40s linear infinite; }
+    .band__track img { height: calc(192 * var(--u)); width: auto; }
+    /* La foto alta se recorta a la misma altura que las demás */
+    .band__track img.tall { height: calc(192 * var(--u)); width: calc(325 * var(--u)); object-fit: cover; }
+    @keyframes band { to { transform: translateX(-50%); } }
+    @media (max-width: 900px) {
+      .band__track img { height: 120px; } .band__track img.tall { height: 120px; width: 203px; }
+      .opening { padding: 24px 16px 0; }
+      .cv > .signs { position: relative; left: auto; top: auto; width: 100% !important; max-width: 520px; height: auto !important; aspect-ratio: 443 / 209; margin: 8px auto; }
+    }
+  </style>
+</head>
+<body class="blur-bg">
+  <header class="hd" data-label="Sistemas"></header>
+
+  <section class="films__head">
+    <h1>Pensamiento sistémico - Tesis</h1>
+    <p>El pensamiento sistémico busca entender cómo interactúan los elementos dentro de un todo, revelando patrones, relaciones y dinámicas a lo largo del tiempo. Abordo el diseño mapeando las conexiones entre usuarios, contextos y tecnologías, para crear soluciones que respondan a la complejidad y evolucionen dentro de sistemas más amplios.</p>
+    <div class="controls"></div>
+  </section>
+
+  <section class="opening">
+    <video src="assets/v/tesis-top.mp4" poster="assets/posters/tesis-top.jpg" autoplay muted loop playsinline></video>
+    <p class="opening__q">¿Qué pasaría si una de las zonas más caóticas de la ciudad pudiera rediseñarse para que las personas vuelvan a ser el centro y no el obstáculo?</p>
+    <div class="panel" id="panel" title="Ver lámina completa">
+      <img src="assets/img/tesis-lamina-full.jpg" alt="Lámina Tres x Uno">
+      <button class="panel__btn" type="button">Ver completa ⤢</button>
+    </div>
+  </section>
+
+  <main class="cv" style="--h:1220">
+    <h2 class="a serif medium fs" style="--x:122;--y:52;--w:600;--fs:18.6">Identidad visual</h2>
+    <div class="a band" style="--y:80;--hh:244">
+      <div class="band__track">
+        <img src="assets/img/band-1.png" alt=""><img src="assets/img/band-2.jpg" alt=""><img src="assets/img/band-3.png" alt=""><img class="tall" src="assets/img/band-4.png" alt="">
+        <img src="assets/img/band-1.png" alt=""><img src="assets/img/band-2.jpg" alt=""><img src="assets/img/band-3.png" alt=""><img class="tall" src="assets/img/band-4.png" alt="">
+        <img src="assets/img/band-1.png" alt=""><img src="assets/img/band-2.jpg" alt=""><img src="assets/img/band-3.png" alt=""><img class="tall" src="assets/img/band-4.png" alt="">
+        <img src="assets/img/band-1.png" alt=""><img src="assets/img/band-2.jpg" alt=""><img src="assets/img/band-3.png" alt=""><img class="tall" src="assets/img/band-4.png" alt="">
+      </div>
+    </div>
+
+    <div class="a fs" style="--x:215;--y:324;--w:466;--fs:12">
+      <p>¿Qué significa vender en Once y cómo esa lógica moldea su identidad comercial?</p>
+      <p>La forma de vender es directa, casera y espontánea. Los vendedores crean sus propios sistemas de comunicación: carteles improvisados y escritos a mano que buscan ser entendidos al instante. Esa repetición genera una especie de lenguaje propio del barrio.</p>
+    </div>
+    <p class="a fs" style="--x:781;--y:324;--w:440;--fs:12">Este mismo lenguaje visual que ya existe en Once —ese que mezcla lo informal, lo rápido y lo efectivo— lo usamos como herramienta de comunicación para difundir nuestro proyecto.</p>
+
+    <!-- Carteles de Once: grilla fija como en el Figma. Medidas en % del bloque, así escala igual en cualquier pantalla -->
+    <div class="a signs" style="--x:217;--y:431;--w:443;--hh:209">
+      <div class="crop" style="left:0.0%;top:4.306%;width:30.474%;height:40.67%"><img src="assets/img/st-3.png" alt="Cartel MOM" style="left:-7.407%;top:-140.0%;width:232.593%;height:245.882%"></div>
+      <img class="sign" src="assets/img/st-2.png" alt="Cartel liquidación $3000" style="left:34.312%;top:0%;width:34.763%">
+      <div class="crop" style="left:72.686%;top:4.306%;width:27.314%;height:41.148%"><img src="assets/img/st-1.png" alt="Cartel Microtul" style="left:0.0%;top:-96.512%;width:138.843%;height:195.349%"></div>
+      <div class="crop" style="left:0.677%;top:54.067%;width:30.7%;height:45.933%"><img src="assets/img/st-1.png" alt="Cartel Red con strass" style="left:-41.176%;top:6.25%;width:138.971%;height:196.875%"></div>
+      <div class="crop" style="left:33.183%;top:45.455%;width:33.86%;height:54.545%"><img src="assets/img/st-3.png" alt="Cartel Cargo" style="left:0.0%;top:0.0%;width:204.0%;height:178.947%"></div>
+      <div class="crop" style="left:67.043%;top:49.282%;width:32.731%;height:50.718%"><img src="assets/img/st-3.png" alt="Cartel Caleo" style="left:-124.828%;top:-105.66%;width:235.172%;height:215.094%"></div>
+    </div>
+    <img class="a media" src="assets/img/st-4.png" alt="Posters Once" style="--x:808;--y:388;--w:359">
+
+    <!-- Stickers sueltos: se mueven con el scroll (data-speed) -->
+    <img class="a deco" data-speed=".22" src="assets/img/st-6.png" alt="" style="--x:45;--y:420;--w:150">
+    <img class="a deco" data-speed=".3" src="assets/img/st-7.png" alt="" style="--x:600;--y:600;--w:63">
+    <img class="a deco" data-speed="-.2" src="assets/img/st-5.png" alt="" style="--x:690;--y:470;--w:90">
+    <img class="a deco" data-speed="-.18" src="assets/img/st-9.png" alt="" style="--x:1090;--y:385;--w:110">
+    <img class="a deco" data-speed=".28" src="assets/img/st-8.png" alt="" style="--x:1180;--y:520;--w:96">
+
+    <h2 class="a serif medium fs" style="--x:109;--y:752;--w:400;--fs:18.6">Comunicación</h2>
+    <div class="a media" style="--x:109;--y:793;--w:575;--hh:324;--ar:16/9"><video class="fit" src="assets/v/tesis-comunicacion.mp4" poster="assets/posters/tesis-comunicacion.jpg" autoplay muted loop playsinline></video></div>
+    <h2 class="a serif medium fs" style="--x:755;--y:752;--w:400;--fs:18.6">Video promocional de la web</h2>
+    <div class="a media" style="--x:754;--y:794;--w:573;--hh:323;--ar:16/9"><video class="fit" src="assets/v/once-app.mp4?v=2" poster="assets/posters/once-app.jpg" autoplay muted loop playsinline></video></div>
+  </main>
+  <footer class="ft"></footer>
+
+  <div class="viewer" id="viewer" hidden>
+    <button class="viewer__close" aria-label="Cerrar">✕</button>
+    <img src="assets/img/tesis-lamina-full.jpg" alt="Lámina Tres x Uno completa">
+  </div>
+
+  <script src="js/site.js?v=25"></script>
+  <script>
+    // Lámina: al tocarla se abre completa, en grande
+    const viewer = document.getElementById('viewer');
+    const openViewer = () => { viewer.hidden = false; viewer.scrollTop = 0; document.body.style.overflow = 'hidden'; };
+    const closeViewer = () => { viewer.hidden = true; document.body.style.overflow = ''; };
+    document.getElementById('panel').addEventListener('click', openViewer);
+    viewer.querySelector('.viewer__close').addEventListener('click', closeViewer);
+    viewer.addEventListener('click', e => { if (e.target === viewer) closeViewer(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && !viewer.hidden) closeViewer(); });
+
+    // Parallax de los objetos: se desplazan a distinta velocidad según su distancia al centro de la pantalla
+    const floaters = [...document.querySelectorAll('[data-speed]')];
+    let ticking = false;
+    const parallax = () => {
+      ticking = false;
+      if (innerWidth <= 900) { floaters.forEach(el => el.style.translate = ""); return; }
+      floaters.forEach(el => {
+        el.style.translate = '0 0';
+        const r = el.getBoundingClientRect();
+        const offset = r.top + r.height / 2 - innerHeight / 2;
+        el.style.translate = `0 ${(-offset * el.dataset.speed * 0.6).toFixed(1)}px`;
+      });
+    };
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(parallax); } }, { passive: true });
+    addEventListener('resize', parallax);
+    parallax();
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+/* Réplica del portfolio de Figma (maggiebellucci.figma.site) con la paleta nueva.
+   Las medidas vienen del diseño a 1440px: cada número se multiplica por --u. */
+
+/* Canela Deck: Thin en versión Trial; Regular y Medium usan la Bold (trae tildes y ñ).
+   La portada usa aparte "Canela Deck Trial" Regular. */
+@font-face { font-family: "Canela Deck"; font-weight: 200; font-display: swap; src: url("../fonts/CanelaDeck-Thin-Trial.otf") format("opentype"); }
+@font-face { font-family: "Canela Deck"; font-weight: 400 700; font-display: swap; src: url("../fonts/CanelaDeck-Bold.ttf") format("truetype"); }
+@font-face { font-family: "Canela Deck Trial"; font-weight: 400; font-display: swap; src: url("../fonts/CanelaDeck-Regular-Trial.otf") format("opentype"); }
+/* Haas 35 Extra Light: se usa si está instalada en la compu; si no, cae en la 45 Light */
+@font-face { font-family: "Haas"; src: local("Neue Haas Grotesk Display Pro 35 Extra Light"), local("NHaasGroteskDSPro-35XLt"); font-weight: 200; font-display: swap; }
+@font-face { font-family: "Haas"; src: url("../fonts/haasgrotdisp-45light-webfont.otf") format("opentype"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Haas"; src: url("../fonts/NHaasGroteskDSStd-55Rg.otf") format("opentype"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Haas"; src: url("../fonts/HaasGrotDisp-65Medium.otf") format("opentype"); font-weight: 500; font-display: swap; }
+
+/* Paleta nueva (reemplaza: violeta → oliva, rosa viejo → rosa, azul → azul, + bordó) */
+:root {
+  --cream: #f9f7f1;
+  --olive: #6b6f4b;
+  --pink: #cc87a1;
+  --navy: #221e3e;
+  --wine: #73304c;
+
+  --serif: "Canela Deck", Georgia, serif;
+  --sans: "Haas", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --wash: rgba(249, 247, 241, .7);
+  --photo: linear-gradient(var(--wash), var(--wash)), url("../assets/img/hero.jpg") center / cover;
+  /* Escala del diseño: crece con la pantalla hasta 1680px de ancho y ahí se frena (se centra) */
+  --vw: min(100vw, 1680px);
+  --u: calc(var(--vw) / 1440);
+  --header: calc(88 * var(--u));
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--cream); }
+/* Fondo de todo el sitio: la foto de portada lavada con crema */
+body::before { content: ""; position: fixed; inset: 0; z-index: -1; background: var(--photo); }
+/* El footer queda siempre abajo, aunque la página sea corta */
+body { min-height: 100svh; display: flex; flex-direction: column; }
+body > * { flex-shrink: 0; }
+.ft { margin-top: auto; }
+body { font-family: var(--sans); font-weight: 400; color: var(--navy); background: transparent; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+img, video { display: block; max-width: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* ---------- Lienzo a escala ---------- */
+.cv { position: relative; width: 100%; max-width: calc(1440 * var(--u)); margin-inline: auto; height: calc(var(--h) * var(--u)); overflow: hidden; }
+.a { position: absolute; left: calc(var(--x) * var(--u)); top: calc(var(--y) * var(--u)); width: calc(var(--w) * var(--u)); }
+.a[style*="--hh"] { height: calc(var(--hh) * var(--u)); }
+.fit { width: 100%; height: 100%; object-fit: cover; }
+.clip { overflow: hidden; }
+
+/* Tipos (fs en px del diseño a 1440) */
+.fs { font-size: max(10px, calc(var(--fs, 12) * var(--u))); line-height: 1.4; }
+.serif { font-family: var(--serif); font-weight: 400; line-height: 1.15; }
+.thin { font-weight: 200; }
+.medium { font-weight: 500; }
+.light { font-weight: 300; }
+.pink { color: var(--pink); }
+.olive { color: var(--olive); }
+.label { font-weight: 300; opacity: .75; }
+.italic { font-style: italic; font-weight: 300; }
+.up { text-transform: uppercase; }
+.body p + p { margin-top: .9em; }
+.meta { display: grid; gap: calc(16 * var(--u)); }
+.meta .tools { display: flex; flex-wrap: wrap; gap: 4px calc(18 * var(--u)); }
+
+/* Botón (CV, LINK) */
+.btn { display: grid; place-items: center; background: var(--olive); color: var(--cream); transition: background .3s, color .3s; }
+.btn:hover { background: var(--wine); }
+.link { color: var(--olive); font-weight: 300; text-decoration: underline; text-underline-offset: 3px; transition: color .3s; }
+.link:hover { color: var(--wine); }
+
+/* Volver (‹ Editorial) */
+.back { display: inline-flex; align-items: center; gap: .5em; font-family: var(--serif); font-weight: 200; color: var(--navy); transition: color .3s; }
+.back::before { content: "‹"; font-family: var(--sans); font-weight: 300; }
+.back:hover { color: var(--wine); }
+
+/* ---------- Header de páginas internas ---------- */
+.hd {
+  position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--header);
+  background: var(--photo); background-attachment: fixed;
+  color: var(--navy);
+}
+.hd > * { position: absolute; z-index: 1; }
+.hd__nav { left: calc(26 * var(--u)); top: 50%; transform: translateY(-50%); display: flex; gap: calc(32 * var(--u)); }
+.hd__nav a { font-weight: 300; font-size: max(13px, calc(20 * var(--u))); padding: 4px 6px; margin: -4px -6px; border: 1.5px solid transparent; transition: border-color .3s; }
+.hd__nav a:hover { border-color: var(--navy); }
+.hd__logo { left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; }
+.hd__logo b { display: block; font-family: var(--serif); font-weight: 200; font-size: max(18px, calc(27 * var(--u))); line-height: 1.1; }
+.hd__logo small { display: block; font-size: max(8px, calc(11 * var(--u))); text-transform: uppercase; margin-top: 2px; }
+.burger { right: calc(34 * var(--u)); top: 50%; transform: translateY(-50%); width: max(26px, calc(35 * var(--u))); height: max(19px, calc(26 * var(--u))); display: flex; flex-direction: column; justify-content: space-between; }
+.burger i { display: block; height: 1.5px; background: currentColor; transition: background .3s; }
+.burger:hover i { background: var(--wine); }
+
+/* ---------- Footer ---------- */
+.ft { height: calc(86 * var(--u)); min-height: 64px; background: var(--navy); display: flex; align-items: center; gap: max(24px, calc(32 * var(--u))); padding: 0 max(20px, calc(40 * var(--u))); }
+.ft a { display: inline-flex; align-items: center; padding: 6px; margin: -6px; color: var(--pink); transition: color .3s, transform .3s; }
+.ft a:hover { color: var(--cream); transform: translateY(-2px); }
+.ft svg { width: max(26px, calc(30 * var(--u))); height: max(26px, calc(30 * var(--u))); }
+
+/* Fondo de imagen tenue (about, contact) */
+.ghost { display: none; position: absolute; opacity: .3; pointer-events: none; object-fit: cover; }
+
+/* ---------- Tablet y celular (hasta 900px): el lienzo pasa a columna ---------- */
+@media (max-width: 900px) {
+  :root { --u: calc(min(100vw, 900px) / 760); --header: 64px; }
+  .cv { max-width: none; height: auto !important; padding: calc(var(--header) + 24px) 16px 48px; display: flex; flex-direction: column; gap: 18px; overflow: visible; }
+  .cv > .a { position: static; width: auto !important; height: auto !important; }
+  .cv > .a.media { width: 100% !important; }
+  .cv > .a.media .fit { height: auto; aspect-ratio: var(--ar, auto); }
+  .cv > .ghost, .cv > .deco { display: none; }
+  .fs { font-size: max(12px, calc(var(--fs, 12) * 0.9px)); }
+  .hd__nav { display: none; }
+  .ft { padding: 0 24px; gap: 28px; }
+}
+
+/* Videos sueltos: al tocarlos se abren grandes con controles */
+video.zoomable { cursor: zoom-in; }
+.vbox { position: fixed; inset: 0; z-index: 110; background: rgba(34, 30, 62, .96); display: grid; place-items: center; padding: 72px 24px 32px; }
+.vbox[hidden] { display: none; }
+.vbox video { max-width: min(100%, 1400px); max-height: calc(100svh - 104px); background: #000; }
+.vbox__close { position: fixed; top: 16px; right: 20px; width: 52px; height: 52px; display: grid; place-items: center; background: var(--pink); color: var(--navy); font-size: 28px; line-height: 1; }
+.vbox__close:hover { background: var(--cream); }
+
+/* Tablet: más aire a los costados y entre bloques */
+@media (min-width: 601px) and (max-width: 900px) {
+  .cv { padding: calc(var(--header) + 40px) 40px 72px; gap: 24px; }
+  .ft { padding: 0 40px; }
+}
+
+/* Páginas con mucho texto: el fondo de foto se desenfoca para que se lea mejor */
+body.blur-bg::before { filter: blur(5px); transform: scale(1.04); }
+/* Texto un poquito más grueso en esas páginas (entre Roman y Medium), para que se lea sobre el fondo */
+body.blur-bg .fs:not(.serif), body.blur-bg .films__head p, body.blur-bg .opening__q { -webkit-text-stroke: .25px currentColor; }
+
+/* ---------- Hovers: todo lo clickeable reacciona ----------
+   Textos y links → bordó. Imágenes y videos → se iluminan, crecen apenas y aparece la etiqueta "Ver". */
+.hd__logo b, .hd__logo small { transition: color .3s; }
+.hd__logo:hover b, .hd__logo:hover small { color: var(--wine); }
+.hd__nav a { transition: border-color .3s, color .3s; }
+.hd__nav a:hover { color: var(--wine); border-color: var(--wine); }
+.burger i { transition: background .3s, transform .3s; }
+.burger:hover i:nth-child(2) { transform: scaleX(.7); transform-origin: right; }
+.btn { transition: background .3s, color .3s, letter-spacing .3s; }
+.btn:hover { letter-spacing: .06em; }
+
+/* Videos que se agrandan al tocarlos */
+.zoom-wrap { overflow: hidden; }
+.zoom-wrap:not(.a) { position: relative; }
+video.zoomable { transition: filter .4s, transform .6s cubic-bezier(.2,.7,.1,1); }
+.zoom-wrap:hover video.zoomable { filter: brightness(1.08) saturate(1.05); transform: scale(1.02); }
+
+/* Etiqueta "Ver" que aparece sobre lo clickeable */
+.has-ver::after {
+  content: "Ver ↗"; position: absolute; top: 12px; right: 12px; z-index: 3; pointer-events: none;
+  padding: 6px 10px; background: var(--pink); color: var(--navy);
+  font-family: var(--sans); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  opacity: 0; transform: translateY(-4px); transition: opacity .3s, transform .3s;
+}
+.has-ver:hover::after { opacity: 1; transform: none; }
+@media (hover: none) { .has-ver::after { display: none; } }
+/* El header de esas páginas usa la misma foto con el mismo desenfoque que el fondo */
+body.blur-bg .hd { background: none; overflow: hidden; }
+body.blur-bg .hd::before { content: ""; position: absolute; left: 0; top: 0; width: 100vw; height: 100vh; z-index: 0; background: var(--photo); filter: blur(5px); transform: scale(1.04); transform-origin: 50% 50vh; }

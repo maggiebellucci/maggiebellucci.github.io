@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animación - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Animación - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/motion.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <link rel="stylesheet" href="css/projects.css?v=25">
+</head>
+<body>
+  <header class="hd" data-label="Animación"></header>
+
+  <section class="films__head">
+    <h1>Animación</h1>
+    <p>El motion graphics le da vida a lo visual a través del movimiento, el ritmo y el tiempo, transformando ideas estáticas en experiencias dinámicas. Trabajo con animación, transiciones y narrativa visual para comunicar conceptos de una forma más atractiva e inmersiva. Con herramientas como After Effects, Illustrator y Premiere, exploro cómo el movimiento puede potenciar la narrativa, la emoción y la claridad.</p>
+    <div class="controls"></div>
+  </section>
+
+  <section class="list list--stack" id="list"></section>
+
+  <footer class="ft"></footer>
+
+  <div class="player" id="player" hidden>
+    <button class="player__close" aria-label="Cerrar">✕</button>
+    <button class="player__nav player__nav--prev" aria-label="Anterior">←</button>
+    <button class="player__nav player__nav--next" aria-label="Siguiente">→</button>
+    <div class="player__inner">
+      <video id="pvideo" controls playsinline></video>
+      <aside class="player__info" id="pinfo"></aside>
+    </div>
+  </div>
+
+  <script src="js/site.js?v=25"></script>
+  <script>
+    window.GROUPS = [{
+      label: 'Motion design', hideLabel: true,
+      items: [
+        {
+          title: 'Logo animado - “Shazam”', src: 'assets/v/shazam.mp4', poster: 'assets/posters/shazam.jpg', ar: '16/9',
+          desc: 'Ejercicio de animación de identidad visual basado en el sistema visual y conceptual de la aplicación Shazam. La propuesta traduce en movimiento las ideas de orientación, búsqueda y recorrido dentro de un entorno caótico, utilizando transiciones dinámicas y una lógica de aparición progresiva para que el logo actúe como extensión del funcionamiento de la app.',
+          meta: [['Herramientas:', 'Adobe After Effects · Adobe Illustrator'], ['Año:', '2025'], ['Materia:', 'Lenguaje de animación'], ['Disciplina:', 'Motion design'], ['Tipo de trabajo:', 'Académico']],
+        },
+        {
+          title: 'Promoción de la aplicación para el barrio Once', src: 'assets/v/once-app.mp4?v=2', poster: 'assets/posters/once-app.jpg', ar: '16/9',
+          desc: 'Este motion presenta una app diseñada para recorrer, entender y navegar el barrio de Once, un entorno urbano atravesado por el caos, la saturación visual y la superposición constante de estímulos. Frente a la dificultad de orientarse y encontrar elementos específicos dentro del barrio, la aplicación funciona como una herramienta de navegación que ordena la experiencia sin anular la identidad propia del lugar.\n\nEl video muestra cómo la app permite buscar objetos, rubros y locales puntuales creando una ruta, además de proponer rutas temáticas que reorganizan el recorrido urbano según distintos intereses, ofreciendo nuevas formas de exploración. A través de una interfaz clara, dinámica y adaptable, la aplicación traduce la complejidad de Once en una experiencia más legible y accesible.',
+          meta: [['Herramientas:', 'Adobe After Effects · Adobe Illustrator · Adobe Photoshop · Blender'], ['Año:', '2025'], ['Materia:', 'Lenguaje de animación'], ['Tipo de trabajo:', 'Académico - TESIS']],
+        },
+      ],
+    }];
+  </script>
+  <script src="js/projects.js?v=25"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magdalena Bellucci - Portfolio</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Magdalena Bellucci - Portfolio">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/index.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <style>
+    /* Estado claro → al pasar por "My portfolio" todo pasa a azul + rosa, como en Figma */
+    .home { --bg: var(--cream); --fg: var(--navy); --btn: var(--pink); --btn-fg: var(--navy); --credit: var(--navy); --img: .5;
+      position: relative; height: 100svh; min-height: 520px; overflow: hidden; background: var(--bg); color: var(--fg);
+      transition: background-color .45s ease, color .45s ease; }
+    .home.is-dark { --img: .3; --bg: var(--navy); --fg: var(--pink); --btn: var(--pink); --btn-fg: var(--navy); --credit: var(--pink); }
+    .home__img { position: absolute; width: 165.4vw; left: -36.5vw; top: calc(50% - 57.5vw); opacity: var(--img); pointer-events: none; transition: opacity .45s; }
+    .home .burger { position: absolute; top: 38px; right: 33px; width: 47px; height: 32px; transform: none; color: var(--fg); }
+    .home .burger i { height: 2px; background: var(--fg); transition: background .45s; }
+    .home .burger:hover i { background: var(--fg); opacity: .6; }
+    /* Medidas exactas del Figma (a 1440px de ancho: 1px = 1/1440 vw) */
+    .home__title { position: absolute; left: 0; right: 0; top: 30.2%; display: flex; flex-direction: column; align-items: center; gap: calc(20 / 1440 * var(--vw)); text-align: center; }
+    .home__name { font-family: "Canela Deck Trial", var(--serif); font-weight: 400; font-size: calc(64 / 1440 * var(--vw)); line-height: 1; }
+    .home__sub { font-weight: 400; font-size: calc(25 / 1440 * var(--vw)); line-height: 1; text-transform: uppercase; }
+    .home__marquee { position: absolute; left: 0; right: 0; top: 52.2%; padding: .4em 0; border-block: 1.5px solid var(--fg); overflow: hidden; display: flex; align-items: center; transition: border-color .45s; }
+    .home__track { display: flex; width: max-content; animation: scroll 60s linear infinite; }
+    .home__track span { font-weight: 200; font-size: calc(64 / 1440 * var(--vw)); line-height: 1.15; white-space: pre; text-transform: uppercase; }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+    .home__btn { position: absolute; left: 50%; top: 72.9%; transform: translateX(-50%); padding: calc(14 / 1440 * var(--vw)) calc(36 / 1440 * var(--vw)); white-space: nowrap;
+      background: var(--btn); color: var(--btn-fg); font-weight: 400; font-size: calc(25 / 1440 * var(--vw)); line-height: 1; text-transform: uppercase; transition: background-color .45s, color .45s; }
+    .home__credit { position: absolute; right: 2.6vw; bottom: 4.4%; font-size: 1.04vw; font-style: italic; font-weight: 300; color: var(--credit); transition: color .45s; }
+    /* Ventanas más altas que anchas: la foto cubre todo el alto */
+    @media (max-aspect-ratio: 4/3) { .home__img { width: auto; height: 100%; left: 50%; top: 0; transform: translateX(-46%); } }
+    @media (max-width: 700px) {
+      .home__img { width: auto; height: 100%; left: 50%; top: 0; transform: translateX(-45%); }
+      .home__title { top: 28%; gap: 12px; }
+      .home__name { font-size: 10vw; }
+      .home__sub { font-size: 3.6vw; }
+      .home__track span { font-size: 6vw; }
+      .home__marquee { top: 46%; }
+      .home__btn { font-size: 4vw; padding: 3vw 7vw; top: 66%; }
+      .home__credit { font-size: 3vw; }
+    }
+  </style>
+</head>
+<body>
+  <main class="home" id="home">
+    <img class="home__img" src="assets/img/hero.jpg" alt="">
+    <a class="burger" href="menu.html" aria-label="Menú"><i></i><i></i><i></i></a>
+    <div class="home__title">
+      <h1 class="home__name">Magdalena Bellucci</h1>
+      <p class="home__sub" id="sub">Diseño integral</p>
+    </div>
+    <div class="home__marquee" aria-hidden="true">
+      <div class="home__track">
+        <span>BRANDING E IDENTIDAD VISUAL -  DISEÑO 3D  -  DISEÑO UX/UI   -  MOTION GRAPHICS   -  DISEÑO EDITORIAL  -  EXPERIENCIAS INMERSIVAS  -  DISEÑO ESPACIAL  -  DISEÑO AUDIOVISUAL -  DIRECCIÓN DE ARTE E IA -  </span>
+        <span>BRANDING E IDENTIDAD VISUAL -  DISEÑO 3D  -  DISEÑO UX/UI   -  MOTION GRAPHICS   -  DISEÑO EDITORIAL  -  EXPERIENCIAS INMERSIVAS  -  DISEÑO ESPACIAL  -  DISEÑO AUDIOVISUAL -  DIRECCIÓN DE ARTE E IA -  </span>
+      </div>
+    </div>
+    <a class="home__btn" id="go" href="work.html">Mi portfolio</a>
+    <p class="home__credit">Portfolio hecho por mí</p>
+  </main>
+
+  <script>
+    const home = document.getElementById('home');
+    const go = document.getElementById('go');
+    go.addEventListener('mouseenter', () => home.classList.add('is-dark'));
+    go.addEventListener('mouseleave', () => home.classList.remove('is-dark'));
+
+    // "INTEGRAL DESIGN" se decodifica al entrar
+    const sub = document.getElementById('sub');
+    const final = sub.textContent.toUpperCase();
+    const pool = 'ABDEGILNST';
+    let frame = 0;
+    const tick = () => {
+      sub.textContent = [...final].map((c, i) => c === ' ' || i < frame / 3 ? c : pool[Math.floor(Math.random() * pool.length)]).join('');
+      if (frame++ < final.length * 3) requestAnimationFrame(tick);
+    };
+    tick();
+  </script>
+</body>
+</html>

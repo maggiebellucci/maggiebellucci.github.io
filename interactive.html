@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactivo - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Interactivo - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/interactive.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <style>
+    .iv { display: block; transition: transform .5s cubic-bezier(.2,.7,.1,1); }
+    .iv { overflow: hidden; }
+    .iv video { transition: filter .4s; }
+    .iv:hover video { filter: brightness(1.1); }
+    .iv:hover { transform: translateY(calc(-10 * var(--u))); z-index: 5; }
+  </style>
+</head>
+<body>
+  <header class="hd" data-label="Interactivo"></header>
+  <main class="cv" style="--h:900">
+    <h1 class="a serif medium fs" style="--x:150;--y:137;--w:896;--fs:24">Diseño interactivo</h1>
+    <p class="a light fs" style="--x:150;--y:181;--w:526;--fs:15">El diseño interactivo se enfoca en crear experiencias de usuario significativas a través de la estructura, el comportamiento y la claridad visual. Diseño productos digitales como sitios web y apps, combinando usabilidad, estética e interacción para guiar a las personas de forma intuitiva y generar participación.</p>
+    <a class="a iv media has-ver" href="interactive-efimera.html" style="--x:266;--y:262;--w:954;--hh:540;--ar:16/9"><video class="fit" src="assets/v/efimera.mp4" poster="assets/posters/efimera.jpg" autoplay muted loop playsinline></video></a>
+    <a class="a iv media has-ver" href="interactive-amanita.html" style="--x:117;--y:257;--w:274;--hh:490;--ar:9/16"><video class="fit" src="assets/v/amanita.mp4" poster="assets/posters/amanita.jpg" autoplay muted loop playsinline></video></a>
+    <a class="a iv media has-ver" href="interactive-once.html" style="--x:1059;--y:285;--w:237;--hh:441;--ar:9/16"><video class="fit" src="assets/v/once-web.mp4" poster="assets/posters/once-web.jpg" autoplay muted loop playsinline></video></a>
+  </main>
+  <footer class="ft"></footer>
+  <script src="js/site.js?v=25"></script>
+</body>
+</html>

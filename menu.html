@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menú - Magdalena Bellucci</title>
+  <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Menú - Magdalena Bellucci">
+  <meta property="og:description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
+  <meta property="og:image" content="https://magdalenabellucci.com/assets/img/og.jpg">
+  <meta property="og:url" content="https://magdalenabellucci.com/menu.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="stylesheet" href="css/site.css?v=25">
+  <style>
+    .menu { min-height: 100svh; }
+    .menu__close { position: absolute; right: calc(33 * var(--u)); top: calc(29 * var(--u)); width: max(22px, calc(30 * var(--u))); height: max(22px, calc(27 * var(--u))); color: var(--olive); transition: color .3s; }
+    .menu__close::before, .menu__close::after { content: ""; position: absolute; left: -10%; right: -10%; top: 50%; height: 1.5px; background: currentColor; transform: rotate(42deg); }
+    .menu__close::after { transform: rotate(-42deg); }
+    .menu__close:hover { color: var(--wine); }
+    .menu__logo { text-align: center; color: var(--olive); }
+    .menu__logo b { display: block; font-family: var(--serif); font-weight: 200; font-size: max(28px, calc(43 * var(--u))); line-height: 1; }
+    .menu__logo small { display: block; font-size: max(10px, calc(14.3 * var(--u))); text-transform: uppercase; margin-top: calc(12 * var(--u)); }
+    .menu__item { display: grid; place-items: center; height: calc(87 * var(--u)); min-height: 60px; font-family: var(--serif); font-weight: 200; font-size: max(26px, calc(36 * var(--u))); color: var(--navy); transition: background .3s, color .3s; }
+    .menu__item:hover { background: var(--navy); color: var(--pink); }
+    @media (max-width: 900px) { .menu .cv { justify-content: center; min-height: 100svh; } }
+  </style>
+</head>
+<body>
+  <main class="menu">
+    <div class="cv" style="--h:900">
+      <a class="menu__close" href="javascript:history.length > 1 ? history.back() : location.href='index.html'" aria-label="Cerrar"></a>
+      <a class="a menu__logo" href="index.html" style="--x:217;--y:186;--w:1003"><b>Magdalena Bellucci</b><small>Diseño integral</small></a>
+      <a class="a menu__item" href="about.html" style="--x:557;--y:301;--w:323">Sobre mí</a>
+      <a class="a menu__item" href="work.html" style="--x:557;--y:410;--w:323">Trabajos</a>
+      <a class="a menu__item" href="contact.html" style="--x:557;--y:519;--w:323">Contacto</a>
+    </div>
+  </main>
+</body>
+</html>
