@@ -55,7 +55,7 @@
     <a class="burger" href="menu.html" aria-label="Menú"><i></i><i></i><i></i></a>
     <div class="home__title">
       <h1 class="home__name">Magdalena Bellucci</h1>
-      <p class="home__sub" id="sub">Diseño integral</p>
+      <p class="home__sub" id="sub">DISEÑO INTEGRAL Y DIRECCIÓN DE IA</p>
     </div>
     <div class="home__marquee" aria-hidden="true">
       <div class="home__track">
@@ -73,14 +73,15 @@
     go.addEventListener('mouseenter', () => home.classList.add('is-dark'));
     go.addEventListener('mouseleave', () => home.classList.remove('is-dark'));
 
-    // "INTEGRAL DESIGN" se decodifica al entrar
+    // El subtítulo se decodifica al entrar (siempre en el mismo tiempo, aunque el texto sea largo)
     const sub = document.getElementById('sub');
     const final = sub.textContent.toUpperCase();
-    const pool = 'ABDEGILNST';
+    const pool = 'ABCDEGILNORST';
+    const FRAMES = 50;
     let frame = 0;
     const tick = () => {
-      sub.textContent = [...final].map((c, i) => c === ' ' || i < frame / 3 ? c : pool[Math.floor(Math.random() * pool.length)]).join('');
-      if (frame++ < final.length * 3) requestAnimationFrame(tick);
+      sub.textContent = [...final].map((c, i) => c === ' ' || i < frame / FRAMES * final.length ? c : pool[Math.floor(Math.random() * pool.length)]).join('');
+      if (frame++ < FRAMES) requestAnimationFrame(tick);
     };
     tick();
   </script>
