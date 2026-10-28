@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://maggiebellucci.com/assets/img/og.jpg">
   <meta property="og:url" content="https://maggiebellucci.com/tesis.html">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="css/site.css?v=26">
+  <link rel="stylesheet" href="css/site.css?v=27">
   <link rel="stylesheet" href="css/projects.css?v=25">
   <style>
     /* Apertura: video chico, pregunta centrada y la lámina */
@@ -46,12 +46,15 @@
     @media (max-width: 900px) {
       .band__track img { height: 120px; } .band__track img.tall { height: 120px; width: 203px; }
       .opening { padding: 24px 16px 0; }
+      /* En el celular la lámina no scrollea por dentro (atrapaba el scroll de la página): se toca y se abre completa */
+      .panel { overflow: hidden; }
+      .panel__btn { position: absolute; right: 12px; bottom: 12px; left: auto; float: none; margin: 0; }
       .cv > .signs { position: relative; left: auto; top: auto; width: 100% !important; max-width: 520px; height: auto !important; aspect-ratio: 443 / 209; margin: 8px auto; }
     }
   </style>
 </head>
 <body class="blur-bg">
-  <header class="hd" data-label="Sistemas"></header>
+  <header class="hd" data-label="Sistemas" data-back></header>
 
   <section class="films__head">
     <h1>Pensamiento sistémico - Tesis</h1>
@@ -115,7 +118,7 @@
     <img src="assets/img/tesis-lamina-full.jpg" alt="Lámina Tres x Uno completa">
   </div>
 
-  <script src="js/site.js?v=25"></script>
+  <script src="js/site.js?v=26"></script>
   <script>
     // Lámina: al tocarla se abre completa, en grande
     const viewer = document.getElementById('viewer');

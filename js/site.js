@@ -20,6 +20,7 @@ document.querySelectorAll('header.hd').forEach(h => {
       ${nav.includes('work') ? '<a href="work.html">Trabajos</a>' : ''}
       ${nav.includes('about') ? '<a href="about.html">Sobre mí</a>' : ''}
     </nav>
+    ${'back' in h.dataset ? '<a class="hd__back" href="work.html">Trabajos</a>' : ''}
     <a class="hd__logo" href="index.html"><b>Magdalena Bellucci</b><small>${h.dataset.label || ''}</small></a>
     <a class="burger" href="menu.html" aria-label="Menú"><i></i><i></i><i></i></a>`;
 });

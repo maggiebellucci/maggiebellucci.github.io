@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://maggiebellucci.com/assets/img/og.jpg">
   <meta property="og:url" content="https://maggiebellucci.com/work.html">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="css/site.css?v=26">
+  <link rel="stylesheet" href="css/site.css?v=27">
   <style>
     /* Solo los 4 colores de la paleta. Fondo: degradé oliva → rosa + grilla de puntitos muy sutil */
     .orbit { position: relative; height: 420vh; }
@@ -72,7 +72,7 @@
     </div>
   </section>
   <footer class="ft"></footer>
-  <script src="js/site.js?v=25"></script>
+  <script src="js/site.js?v=26"></script>
   <script>
     const CARDS = [
       { title: 'IA', img: 'assets/img/cover-ia.jpg', href: 'ia.html', tag: 'Videos' },
@@ -230,6 +230,8 @@
       }
       down = null;
     });
+    // Si el celular se queda con el gesto para scrollear, se suelta sin hacer click
+    scene.addEventListener('pointercancel', () => { scene.classList.remove('is-drag'); down = null; });
 
     layout();
     readScroll();

@@ -48,8 +48,8 @@ let target = 0, current = 0;
 FILMS.forEach(f => {
   const el = document.createElement('div');
   el.className = 'card';
-  el.style.setProperty('--ar', f.ar);
-  el.innerHTML = `<video muted loop playsinline preload="metadata" poster="${f.poster}" src="${f.src}"></video>`;
+  // En el carrusel todos van verticales (9:16); los horizontales se recortan
+  el.innerHTML = `<video muted loop playsinline preload="metadata" poster="${f.poster}" src="${f.src}"></video><span class="card__go" aria-hidden="true">↗</span>`;
   stage.appendChild(el);
   f.card = el;
   f.cardVideo = el.querySelector('video');
@@ -60,19 +60,28 @@ const wrapOffset = d => { const n = active.length; d = ((d % n) + n) % n; return
 const centerIndex = () => ((Math.round(current) % active.length) + active.length) % active.length;
 const spacing = () => Math.min(innerWidth * (isMobile() ? 0.56 : 0.24), 400);
 
-function range() { return showcase.offsetHeight - innerHeight; }
+// El carrusel queda fijo debajo del header: el recorrido empieza cuando su borde llega al header
+const sticky = $('.showcase__sticky');
+const stickyTop = () => parseFloat(getComputedStyle(sticky).top) || 0;
+function range() { return showcase.offsetHeight - sticky.offsetHeight; }
 function readScroll() {
-  const p = clamp(-showcase.getBoundingClientRect().top / range(), 0, 1);
+  const p = clamp((stickyTop() - showcase.getBoundingClientRect().top) / range(), 0, 1);
   target = p * active.length;
   $('#progress').style.width = `${p * 100}%`;
 }
+const isPinned = (r = showcase.getBoundingClientRect()) =>
+  !showcase.hidden && r.top <= stickyTop() + 1 && r.bottom >= stickyTop() + sticky.offsetHeight - 1;
 
+// Solo se redibuja cuando algo cambió (en el celular, dibujar de más traba el scroll)
+let lastCurrent = null, lastInView = null, dirty = true;
 function render() {
   current += (target - current) * 0.12;
   if (Math.abs(target - current) < 0.0005) current = target;
-  const sp = spacing();
   const r = showcase.getBoundingClientRect();
   const inView = !showcase.hidden && r.bottom > 0 && r.top < innerHeight;
+  if (!dirty && current === lastCurrent && inView === lastInView) { requestAnimationFrame(render); return; }
+  dirty = false; lastCurrent = current; lastInView = inView;
+  const sp = spacing();
 
   FILMS.forEach(f => {
     const idx = active.indexOf(f);
@@ -101,44 +110,53 @@ function render() {
 }
 
 function scrollToIndex(i) {
-  scrollTo({ top: pageTop(showcase) + (clamp(i, 0, active.length) / active.length) * range(), behavior: 'smooth' });
+  scrollTo({ top: pageTop(showcase) - stickyTop() + (clamp(i, 0, active.length) / active.length) * range(), behavior: "smooth" });
 }
 
+// Imán a la carta más cercana al soltar el scroll. En el celular no: pelearía con el scroll con inercia y se traba.
+const touchScreen = matchMedia("(pointer: coarse)").matches;
 let snapTimer, dragging = false;
-addEventListener('scroll', () => {
+addEventListener("scroll", () => {
   readScroll();
   clearTimeout(snapTimer);
-  if (dragging) return;
+  if (dragging || touchScreen) return;
   snapTimer = setTimeout(() => {
     const r = showcase.getBoundingClientRect();
-    if (r.top < -2 && r.bottom > innerHeight + 2 && !showcase.hidden) {
+    if (isPinned(r) && r.bottom > stickyTop() + sticky.offsetHeight + 2) {
       const near = Math.round(target);
       if (Math.abs(near - target) > 0.02) scrollToIndex(near);
     }
   }, 160);
 }, { passive: true });
-addEventListener('resize', readScroll);
+addEventListener("resize", () => { dirty = true; readScroll(); });
 
-// Arrastrar mueve el scroll: scroll y drag son la misma cosa
-let startX = 0, lastX = 0, moved = 0;
-stage.addEventListener('pointerdown', e => {
-  dragging = true; startX = lastX = e.clientX; moved = 0;
-  stage.classList.add('is-drag');
+// Arrastrar de costado mueve el carrusel (scroll y drag son la misma cosa).
+// Con el dedo, si el gesto es vertical se deja scrollear la página normalmente.
+let startX = 0, startY = 0, lastX = 0, moved = 0, axis = null;
+stage.addEventListener("pointerdown", e => {
+  dragging = true; startX = lastX = e.clientX; startY = e.clientY; moved = 0;
+  axis = e.pointerType === "mouse" ? "x" : null;
+  stage.classList.add("is-drag");
   stage.setPointerCapture(e.pointerId);
 });
-stage.addEventListener('pointermove', e => {
+stage.addEventListener("pointermove", e => {
   if (!dragging) return;
+  const tx = Math.abs(e.clientX - startX), ty = Math.abs(e.clientY - startY);
+  if (!axis) {
+    if (ty > 8 && ty > tx) { cancelDrag(); return; }
+    if (tx > 8) axis = "x";
+  }
+  moved = Math.max(moved, tx);
   const dx = e.clientX - lastX;
   lastX = e.clientX;
-  moved = Math.max(moved, Math.abs(e.clientX - startX));
-  scrollBy({ top: (-dx / spacing()) * (range() / active.length), behavior: 'instant' });
+  if (axis === "x") scrollBy({ top: (-dx / spacing()) * (range() / active.length), behavior: "instant" });
 });
+const cancelDrag = () => { dragging = false; axis = null; stage.classList.remove("is-drag"); };
 const endDrag = e => {
   if (!dragging) return;
-  dragging = false;
-  stage.classList.remove('is-drag');
+  cancelDrag();
   if (moved < 6) {
-    const hit = document.elementsFromPoint(e.clientX, e.clientY).find(el => el.classList?.contains('card'));
+    const hit = document.elementsFromPoint(e.clientX, e.clientY).find(el => el.classList?.contains("card"));
     const f = hit && FILMS.find(x => x.card === hit);
     if (f) {
       const idx = active.indexOf(f);
@@ -147,21 +165,21 @@ const endDrag = e => {
     }
   } else scrollToIndex(Math.round(target));
 };
-stage.addEventListener('pointerup', endDrag);
-stage.addEventListener('pointercancel', endDrag);
+stage.addEventListener("pointerup", endDrag);
+// Si el navegador se queda con el gesto (scroll vertical), no es un toque: no abre nada
+stage.addEventListener("pointercancel", cancelDrag);
 
-addEventListener('keydown', e => {
-  if (!$('#player').hidden) {
-    if (e.key === 'Escape') closePlayer();
-    if (e.key === 'ArrowRight') stepPlayer(1);
-    if (e.key === 'ArrowLeft') stepPlayer(-1);
+addEventListener("keydown", e => {
+  if (!$("#player").hidden) {
+    if (e.key === "Escape") closePlayer();
+    if (e.key === "ArrowRight") stepPlayer(1);
+    if (e.key === "ArrowLeft") stepPlayer(-1);
     return;
   }
-  const r = showcase.getBoundingClientRect();
-  if (r.top <= 1 && r.bottom >= innerHeight - 1) {
-    if (e.key === 'ArrowRight') { e.preventDefault(); scrollToIndex(Math.round(target) + 1); }
-    if (e.key === 'ArrowLeft') { e.preventDefault(); scrollToIndex(Math.round(target) - 1); }
-    if (e.key === 'Enter') openPlayer(centerIndex());
+  if (isPinned()) {
+    if (e.key === "ArrowRight") { e.preventDefault(); scrollToIndex(Math.round(target) + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); scrollToIndex(Math.round(target) - 1); }
+    if (e.key === "Enter") openPlayer(centerIndex());
   }
 });
 
@@ -186,6 +204,7 @@ $$('.seg button').forEach(b => b.addEventListener('click', () => {
   showcase.hidden = isList;
   list.hidden = !isList;
   if (isList) FILMS.forEach(f => f.cardVideo.pause());
+  dirty = true;
   readScroll();
 }));
 
@@ -195,7 +214,8 @@ $$('.chips button').forEach(b => b.addEventListener('click', () => {
   active = filter === 'all' ? FILMS : FILMS.filter(f => f.cat === filter);
   $$('.list__group').forEach(g => g.hidden = filter !== 'all' && g.dataset.group !== filter);
   current = 0;
-  if (!showcase.hidden) scrollTo({ top: pageTop(showcase), behavior: 'instant' });
+  dirty = true;
+  if (!showcase.hidden) scrollTo({ top: pageTop(showcase) - stickyTop(), behavior: 'instant' });
   readScroll();
 }));
 
