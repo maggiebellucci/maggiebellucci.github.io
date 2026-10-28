@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#cdccc0">
   <title>Sobre mí - Magdalena Bellucci</title>
   <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -12,7 +13,7 @@
   <meta property="og:image" content="https://maggiebellucci.com/assets/img/og.jpg">
   <meta property="og:url" content="https://maggiebellucci.com/about.html">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="css/site.css?v=25">
+  <link rel="stylesheet" href="css/site.css?v=26">
   <style>
     /* Tarjeta personal en 3D: papel rosa con textura de letterpress, tinta violeta (el oliva no se leía sobre el rosa) */
     .about { position: relative; min-height: calc(100svh - var(--header)); margin-top: var(--header); display: grid; place-items: center; padding: 40px 16px 72px; }
@@ -20,7 +21,7 @@
     .stage3d.is-drag { cursor: grabbing; }
     .bcard { --ink: var(--navy); position: relative; width: 100%; aspect-ratio: 1.68; transform-style: preserve-3d; will-change: transform; }
     .bcard__face {
-      position: absolute; inset: 0; backface-visibility: hidden; overflow: hidden; container-type: inline-size;
+      position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; overflow: hidden; container-type: inline-size;
       background-color: var(--pink); color: var(--ink);
       box-shadow: 0 30px 60px -30px rgba(34, 30, 62, .55), 0 10px 20px -12px rgba(34, 30, 62, .35);
     }
@@ -73,7 +74,8 @@
     /* Celular y tablet vertical: la tarjeta pasa a formato vertical con letra más grande */
     @media (max-width: 760px) {
       .about { padding: 24px 16px 80px; }
-      .stage3d { width: min(88vw, 440px); }
+      /* En el celular, deslizar arriba/abajo scrollea la página; de costado gira la tarjeta */
+      .stage3d { width: min(88vw, 440px); touch-action: pan-y; }
       .bcard { aspect-ratio: .62; }
       .bcard__inner { padding: 9cqw 8cqw 8cqw; }
       .bc-name { font-size: 9.5cqw; }
@@ -183,6 +185,10 @@
         if (Math.abs(vy) < 0.02) ry += Math.sin((now - t0) / 1400) * 0.05;  // balanceo en reposo
       }
       card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+      // Safari (iPhone) no siempre esconde la cara de atrás: se oculta a mano según hacia dónde mira la tarjeta
+      const showFront = Math.cos(ry * Math.PI / 180) >= 0;
+      faces[0].style.visibility = showFront ? 'visible' : 'hidden';
+      faces[1].style.visibility = showFront ? 'hidden' : 'visible';
       // La luz se desplaza según el ángulo
       const a = ((ry % 360) + 360) % 360;
       const lx = 50 - Math.sin(a * Math.PI / 180) * 45;

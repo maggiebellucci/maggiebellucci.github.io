@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#cdccc0">
   <title>Trabajos - Magdalena Bellucci</title>
   <meta name="description" content="Portfolio de Magdalena Bellucci, diseñadora integral y directora de arte con IA: videos con inteligencia artificial, animación, sistemas y diseño.">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -12,7 +13,7 @@
   <meta property="og:image" content="https://maggiebellucci.com/assets/img/og.jpg">
   <meta property="og:url" content="https://maggiebellucci.com/work.html">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="css/site.css?v=25">
+  <link rel="stylesheet" href="css/site.css?v=26">
   <style>
     /* Solo los 4 colores de la paleta. Fondo: degradé oliva → rosa + grilla de puntitos muy sutil */
     .orbit { position: relative; height: 420vh; }
@@ -34,16 +35,16 @@
 
     /* Tarjeta curva: franjas sobre un cilindro; las de atrás muestran la imagen oscurecida */
     .oc { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
-    .oc i { position: absolute; left: 0; top: 0; display: block; backface-visibility: hidden; background-repeat: no-repeat; background-color: var(--navy); }
+    .oc i { position: absolute; left: 0; top: 0; display: block; -webkit-backface-visibility: hidden; backface-visibility: hidden; background-repeat: no-repeat; background-color: var(--navy); }
     .oc i.back { filter: brightness(.7); }
     /* Espesor: cantos violeta (arriba/abajo más claros, costados más oscuros) + marco crema sobre la imagen */
-    .oc i.cap { backface-visibility: visible; background: var(--navy); }
+    .oc i.cap { -webkit-backface-visibility: visible; backface-visibility: visible; background: var(--navy); }
     .oc i.cap.top { background: #3a3560; }
     .oc i.cap.side { background: #17142b; }
     .oc i.front { box-shadow: inset 0 var(--fr) 0 var(--cream), inset 0 calc(-1 * var(--fr)) 0 var(--cream); }
     .oc i.front.first { box-shadow: inset 0 var(--fr) 0 var(--cream), inset 0 calc(-1 * var(--fr)) 0 var(--cream), inset var(--fr) 0 0 var(--cream); }
     .oc i.front.last { box-shadow: inset 0 var(--fr) 0 var(--cream), inset 0 calc(-1 * var(--fr)) 0 var(--cream), inset calc(-1 * var(--fr)) 0 0 var(--cream); }
-    .oc__tag { position: absolute; left: 0; top: 0; display: flex; gap: 10px; align-items: baseline; white-space: nowrap; backface-visibility: hidden;
+    .oc__tag { position: absolute; left: 0; top: 0; display: flex; gap: 10px; align-items: baseline; white-space: nowrap; -webkit-backface-visibility: hidden; backface-visibility: hidden;
       font-family: var(--serif); font-weight: 500; font-size: clamp(18px, 1.9vw, 30px); color: var(--navy); }
     .oc__tag small { font-family: var(--sans); font-weight: 400; font-size: clamp(10px, .8vw, 12px); letter-spacing: .14em; text-transform: uppercase; color: var(--pink); background: var(--navy); padding: 4px 8px; }
     .oc__tag small.soon { background: var(--wine); color: var(--pink); }
