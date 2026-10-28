@@ -68,7 +68,7 @@
 .tile__cap b { display: inline-block; transition: transform .4s cubic-bezier(.2,.7,.1,1); }
 .tile:hover .tile__cap b { transform: translateY(-4px); }
 .tile::after {
-  content: "Ver ↗"; position: absolute; top: 12px; right: 12px; z-index: 3; pointer-events: none;
+  content: "Ver \2197\FE0E"; position: absolute; top: 12px; right: 12px; z-index: 3; pointer-events: none;
   padding: 6px 10px; background: var(--pink); color: var(--navy);
   font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
   opacity: 0; transform: translateY(-4px); transition: opacity .3s, transform .3s;

@@ -49,7 +49,7 @@ FILMS.forEach(f => {
   const el = document.createElement('div');
   el.className = 'card';
   // En el carrusel todos van verticales (9:16); los horizontales se recortan
-  el.innerHTML = `<video muted loop playsinline preload="metadata" poster="${f.poster}" src="${f.src}"></video><span class="card__go" aria-hidden="true">↗</span>`;
+  el.innerHTML = `<video muted loop playsinline preload="metadata" poster="${f.poster}" src="${f.src}"></video><span class="card__go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3 9 9 3M4 3h5v5"/></svg></span>`;
   stage.appendChild(el);
   f.card = el;
   f.cardVideo = el.querySelector('video');
@@ -240,7 +240,7 @@ function openPlayer(i) {
       <div><p class="label">Herramientas:</p><p>${f.tools || todo}</p></div>
       <div><p class="label">Año:</p><p>${f.year}</p></div>
       <div><p class="label">Agencia:</p><p>${f.agency}</p></div>
-      ${f.link ? `<div><a class="plink" href="${f.link[1]}" target="_blank" rel="noopener">${f.link[0]} ↗</a></div>` : ''}
+      ${f.link ? `<div><a class="plink" href="${f.link[1]}" target="_blank" rel="noopener">${f.link[0]} &#x2197;&#xFE0E;</a></div>` : ''}
     </div>`;
   player.hidden = false;
   document.body.style.overflow = 'hidden';
