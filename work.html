@@ -36,6 +36,13 @@
     .oc { position: absolute; left: 0; top: 0; transform-style: preserve-3d; }
     .oc i { position: absolute; left: 0; top: 0; display: block; backface-visibility: hidden; background-repeat: no-repeat; background-color: var(--navy); }
     .oc i.back { filter: brightness(.7); }
+    /* Espesor: cantos violeta (arriba/abajo más claros, costados más oscuros) + marco crema sobre la imagen */
+    .oc i.cap { backface-visibility: visible; background: var(--navy); }
+    .oc i.cap.top { background: #3a3560; }
+    .oc i.cap.side { background: #17142b; }
+    .oc i.front { box-shadow: inset 0 var(--fr) 0 var(--cream), inset 0 calc(-1 * var(--fr)) 0 var(--cream); }
+    .oc i.front.first { box-shadow: inset 0 var(--fr) 0 var(--cream), inset 0 calc(-1 * var(--fr)) 0 var(--cream), inset var(--fr) 0 0 var(--cream); }
+    .oc i.front.last { box-shadow: inset 0 var(--fr) 0 var(--cream), inset 0 calc(-1 * var(--fr)) 0 var(--cream), inset calc(-1 * var(--fr)) 0 0 var(--cream); }
     .oc__tag { position: absolute; left: 0; top: 0; display: flex; gap: 10px; align-items: baseline; white-space: nowrap; backface-visibility: hidden;
       font-family: var(--serif); font-weight: 500; font-size: clamp(18px, 1.9vw, 30px); color: var(--navy); }
     .oc__tag small { font-family: var(--sans); font-weight: 400; font-size: clamp(10px, .8vw, 12px); letter-spacing: .14em; text-transform: uppercase; color: var(--pink); background: var(--navy); padding: 4px 8px; }
@@ -86,8 +93,21 @@
         const front = document.createElement('i');
         const back = document.createElement('i');
         back.className = 'back';
+        front.className = 'front' + (s === 0 ? ' first' : s === SLICES - 1 ? ' last' : '');
         front.style.backgroundImage = back.style.backgroundImage = `url("${c.img}")`;
         el.append(front, back);
+      }
+      // Cantos de la tarjeta: arriba y abajo por franja, más los dos costados
+      for (let s = 0; s < SLICES; s++) {
+        const top = document.createElement('i'), bot = document.createElement('i');
+        top.className = 'cap top'; bot.className = 'cap bot';
+        top.dataset.s = bot.dataset.s = s;
+        el.append(top, bot);
+      }
+      for (const side of ['l', 'r']) {
+        const n = document.createElement('i');
+        n.className = 'cap side'; n.dataset.side = side;
+        el.append(n);
       }
       const tag = document.createElement('p');
       tag.className = 'oc__tag';
@@ -108,8 +128,12 @@
       H = W * 0.62;
       const arc = W / R, sa = arc / SLICES;
       const sw = 2 * R * Math.tan(sa / 2) + 1;
+      const D = Math.max(6, W * 0.035);   // espesor
+      const FR = Math.max(3, W * 0.014);  // marco crema
+      const deg = a => a * 180 / Math.PI;
       cards.forEach((el, i) => {
-        const slices = el.querySelectorAll('i');
+        el.style.setProperty('--fr', `${FR}px`);
+        const slices = el.querySelectorAll('i:not(.cap)');
         for (let s = 0; s < SLICES; s++) {
           const ang = (-arc / 2 + sa * (s + 0.5)) * 180 / Math.PI;
           const f = slices[s * 2], b = slices[s * 2 + 1];
@@ -120,8 +144,20 @@
             n.style.marginTop = `${-H / 2}px`;
           }
           f.style.transform = `rotateY(${ang}deg) translateZ(${R}px)`;
-          b.style.transform = `rotateY(${ang}deg) translateZ(${R - 1}px) rotateY(180deg)`;
+          b.style.transform = `rotateY(${ang}deg) translateZ(${R - D}px) rotateY(180deg)`;
         }
+        el.querySelectorAll('i.cap').forEach(n => {
+          if (n.dataset.side) {
+            const a = deg(n.dataset.side === 'l' ? -arc / 2 : arc / 2);
+            Object.assign(n.style, { width: `${D}px`, height: `${H}px`, marginLeft: `${-D / 2}px`, marginTop: `${-H / 2}px`,
+              transform: `rotateY(${a}deg) translateZ(${R - D / 2}px) rotateY(90deg)` });
+          } else {
+            const a = deg(-arc / 2 + sa * (+n.dataset.s + 0.5));
+            const up = n.classList.contains('top');
+            Object.assign(n.style, { width: `${sw}px`, height: `${D}px`, marginLeft: `${-sw / 2}px`, marginTop: `${-D / 2}px`,
+              transform: `rotateY(${a}deg) translateZ(${R - D / 2}px) translateY(${up ? -H / 2 : H / 2}px) rotateX(90deg)` });
+          }
+        });
         el.querySelector('.oc__tag').style.transform = `translate(${-W / 2}px, ${H / 2 + 14}px) translateZ(${R + 2}px)`;
         cover(el, CARDS[i]);
       });
@@ -136,7 +172,7 @@
         const iw = img.width * k, ih = img.height * k;
         const ox = (iw - W) / 2, oy = c.top ? 0 : (ih - H) / 2;
         const strip = W / SLICES;
-        const slices = el.querySelectorAll('i');
+        const slices = el.querySelectorAll('i:not(.cap)');
         for (let s = 0; s < SLICES; s++) {
           const f = slices[s * 2], b = slices[s * 2 + 1];
           for (const n of [f, b]) n.style.backgroundSize = `${iw}px ${ih}px`;
